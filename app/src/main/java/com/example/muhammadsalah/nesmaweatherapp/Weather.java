@@ -32,7 +32,9 @@ public class Weather extends AppCompatActivity {
     String monthday = new SimpleDateFormat("MMM").format(cal.getTime())+" "+new SimpleDateFormat("d").format(cal.getTime());
     String day = new SimpleDateFormat("EEEE").format(cal.getTime());
 
-    private String appid = "90ae95cfcdea5af9243709e38534b2a3";
+    //private String appid = "90ae95cfcdea5af9243709e38534b2a3"; //mykey
+    private String appid = "c0c4a4b4047b97ebc5948ac9c48c0559"; //example key
+
 
     //ArrayList<HashMap<String, String>> dataList;
     ArrayList<Item> array = new ArrayList<Item>();
@@ -40,7 +42,8 @@ public class Weather extends AppCompatActivity {
     int iconID=R.drawable.solar_icon_1;
 
 
-    private String url = "http://api.openweathermap.org/data/2.5/forecast/?q=Cairo,EG&units=metric&cnt=7&appid="+appid;
+    //private String url = "http://api.openweathermap.org/data/2.5/forecast/?q=Cairo,EG&units=metric&cnt=7&appid="+appid;
+    private String url = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Cairo%2CEG&units=metric&cnt=7&appid="+appid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,10 @@ public class Weather extends AppCompatActivity {
 
             if(jsonStr != null){
                 try {
+                    //DELETE ALL RECORDS
+                    Log.d("deleteAll: ", "Deleting all items ..");
+                    db.deleteAllItems();
+
                     JSONObject jsonObject = new JSONObject(jsonStr);
                     JSONArray list = jsonObject.getJSONArray("list");
 
@@ -103,9 +110,12 @@ public class Weather extends AppCompatActivity {
                         Item item = null;
                         JSONObject index = list.getJSONObject(i);
 
-                        JSONObject main = index.getJSONObject("main");
-                        String temp_min = main.getString("temp_min");
-                        String temp_max = main.getString("temp_max");
+                        //JSONObject main = index.getJSONObject("main"); //mykey
+                        //String temp_min = main.getString("temp_min");
+                        //String temp_max = main.getString("temp_max");
+                        JSONObject temp = index.getJSONObject("temp");
+                        String temp_min = temp.getString("min");
+                        String temp_max = temp.getString("max");
 
                         JSONArray weather = index.getJSONArray("weather");
                         JSONObject weatherInfo = weather.getJSONObject(0);
@@ -134,8 +144,6 @@ public class Weather extends AppCompatActivity {
                             item = new Item("TODAY, " + monthday, mainWeatherStatus.toUpperCase(), iconID, temp_max + "°", temp_min + "°");
                             array.add(item);
                         }
-                        //Log.d("delete: ", "Deleting item ..");
-                        //db.deleteItem(i);
                         // Inserting Contacts
                         Log.d("Insert: ", "Inserting ..");
                         db.addItem(item,i);

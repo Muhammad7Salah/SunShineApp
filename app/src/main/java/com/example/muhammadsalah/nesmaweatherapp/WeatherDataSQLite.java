@@ -137,5 +137,14 @@ public class WeatherDataSQLite extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Deleting all Items
+    public void deleteAllItems() {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_WEATHER,null,null);
+        //db.execSQL("DELETE * FROM "+ TABLE_WEATHER);
+        db.close();
+    }
+
 
 }

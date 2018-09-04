@@ -7,4 +7,4 @@ The app displays info about weather from OpenWeather API minimum & maximum tempr
 The app can work offline using sqlite as it caches the last open session.
 
 Inline-style: 
-![alt text](https://github.com/Muhammad7Salah/SunShineApp/edit/master/Screenshot_20180904-231210.jpg "Logo Title Text 1")
+![alt text](https://raw.githubusercontent.com/Muhammad7Salah/SunShineApp/master/Screenshot_20180904-231210.jpg "Logo Title Text 1")
